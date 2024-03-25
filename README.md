@@ -32,7 +32,7 @@
 > ```
 > 이름(또는 닉네임) / 주차 / pull request 날짜
 > ```
-> 예) dohyun / 1주차 / 3월 20일<br>
+> 예) dohyun / 1주차 / 3월 20일<br><br>
 > [자세한 방법은 여기를 참고해주세요](https://shuajjjjj.notion.site/0fde8921f1c84aaebc0bee318c917d29?pvs=4)
 
 
