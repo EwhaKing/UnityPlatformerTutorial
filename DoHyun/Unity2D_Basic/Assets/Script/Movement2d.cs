@@ -6,10 +6,13 @@ public class Movement2d : MonoBehaviour
 {
     private float moveSpeed = 5.0f; //이동 속도
     private Vector3 moveDirection = Vector3.zero;//이동 방향
+    private Rigidbody2D rigid2D;
     private void Awake()
     {   //새로운 위치 = 현재 위치 + (방향 * 속도)
         //transform.position = transform.position + new Vector3(1, 0, 0) * 1;
         //transform.position += Vector3.right * 1;
+
+        rigid2D = GetComponent<Rigidbody2D>();
     }
     private void Update()
     {
@@ -39,11 +42,15 @@ public class Movement2d : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         //키를 누르면 이동 방향을 설정해준다.
-        moveDirection = new Vector3(x, y, 0);
+        //moveDirection = new Vector3(x, y, 0);
 
 
         //새로운 위치
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        //transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+        //rigidbody로 물체 이동 처리하기
+        rigid2D.velocity = new Vector3(x, y, 0) * moveSpeed;
+
 
     }
 }
