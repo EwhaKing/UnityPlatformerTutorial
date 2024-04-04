@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObjSpawner : MonoBehaviour
+public class objSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject boxPrefab;
@@ -15,13 +15,18 @@ public class ObjSpawner : MonoBehaviour
 
         //Instantiate(boxPrefab, new Vector3(-1, -2, 0), Quaternion.identity);
 
+        //회전값
+        Quaternion rotation = Quaternion.Euler(0, 0, 45);
+
+        //Instantiate(boxPrefab, new Vector3(2, 1, 0), rotation);
+
         //생성 obj를 clone에 저장
-        GameObject clone = Instantiate(boxPrefab, Vector3 zero, rotation);
+        GameObject clone = Instantiate(boxPrefab, Vector3.zero, rotation);
 
         //obj 이름
         clone.name = "Box001";
         //obj 색
-        clone.GetComponent<SprintRenderer>().color = Color.black;
+        clone.GetComponent<SpriteRenderer>().color = Color.black;
         //obj 위치
         clone.transform.position = new Vector3(2, 1, 0);
         //obj 크기
