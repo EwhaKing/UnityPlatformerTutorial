@@ -6,6 +6,7 @@ public class Movement2D : MonoBehaviour
 {
     private float moveSpeed = 5.0f;//이동속도
     private Vector3 moveDirection = Vector3.zero;//이동방향
+    private Rigidbody2D rigid2D;
 
     private void Awake()
     {
