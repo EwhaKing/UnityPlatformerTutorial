@@ -307,6 +307,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 458100496623938750, guid: b611333fb2a5d4f419dd332e08d60089, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2472952524243840552, guid: b611333fb2a5d4f419dd332e08d60089, type: 3}
       propertyPath: m_Name
       value: Level01
@@ -735,6 +739,8 @@ GameObject:
   - component: {fileID: 1534630598}
   - component: {fileID: 1534630599}
   - component: {fileID: 1534630600}
+  - component: {fileID: 1534630602}
+  - component: {fileID: 1534630601}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -820,6 +826,39 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.9}
   m_Size: {x: 1, y: 1.8}
   m_Direction: 0
+--- !u!114 &1534630601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534630597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f36d39569e91e4a9fbeace242aed8367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpKeyCode: 99
+--- !u!114 &1534630602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534630597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b8dd22e01f34a34a37ed4e7f31eec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  walkSpeed: 5
+  runSpeed: 8
+  jumpForce: 13
+  lowGravityScale: 2
+  highGravityScale: 3.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
