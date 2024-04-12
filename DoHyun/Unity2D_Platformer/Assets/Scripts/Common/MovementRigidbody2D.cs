@@ -43,6 +43,9 @@ public class MovementRigidbody2D : MonoBehaviour
     public bool IsLongJump { set; get; } = false; //낮은 점프, 높은 점프 체크
     public bool IsGrounded { set; get; } = false; //바닥 체크
 
+    //애니메이션을 위한 플레이어 속도를 반환하는 프로퍼티 Velocity를 정의한다.
+    //이 프로퍼티를 사용하여 플레이어 캐릭터의 애니메이션을 제어한다.
+    public Vector2 Velocity => rigidbody2D.velocity;
 
     private void Awake()
     {
