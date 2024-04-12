@@ -25,6 +25,15 @@ public class MovementRigidbody2D : MonoBehaviour
     private float highGravityScale = 3.5f; //낮은 점프(일반 점프)
 
     private float moveSpeed; //이동 속도
+
+    //바닥 착지 직전 조금 빨리 점프 키를 눌렀을 때 바닥에 착지하면 바로 점프가 되도록 추가 구현
+    //선입력을 할 수 있는 한계 시간을 나타내는 변수와 시간 계산을 위한 변수를 선언한다.
+    private float jumpBufferTime = 0.1f;
+    private float jumpBufferCounter;
+
+    //낭떠러지에서 떨어질 때 아주 잠시 동안 점프가 가능하도록 설정하기 위한 변수
+    float hangTime = 0.2f;
+    float hangCounter;
     private Vector2 collisionSize; //머리, 발 위치에 생성하는 충돌 박스 크기
     private Vector2 footPosition; //발 위치
 
@@ -92,12 +101,13 @@ public class MovementRigidbody2D : MonoBehaviour
     /// <summary>
     /// 마찬가지로 다른 클래스에서 호출하는 점프 메소드이다. y축 점프
     /// </summary>
-    public void Jump()
+    public void Jump() //점프 카운트를 시작점으로 셋팅하기 때문에 점프임!
     {
-        if (IsGrounded == true)
-        {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, jumpForce);
-        }
+        // if (IsGrounded == true)
+        // {
+        //     rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, jumpForce);
+        // }
+        jumpBufferCounter = jumpBufferTime;
     }
 
     //낮은 점프, 높은 점프 구현을 위해 중력 계수를 조절
@@ -114,12 +124,34 @@ public class MovementRigidbody2D : MonoBehaviour
         }
     }
 
+    void JumpAdditive()
+    {
+        //낭떠러지에서 떨어질 때 아주 잠시동안 점프가 가능하도록 설정
+        if (IsGrounded) hangCounter = hangTime;
+        else hangCounter -= Time.deltaTime;
+
+        //점프 중에 점프 키가 선입력 되었고, 점프 버터 설정 시간 이내에 선입력 된 것이라면 = 0.1초 후에 바닥에 닿은 것이라면, 다시 점프한다.
+        //점프하면 jumpBufferCounter=jumpBuffer가 되므로 >0를 만족한다.
+        if (jumpBufferCounter > 0)
+        {
+            jumpBufferCounter -= Time.deltaTime; //업데이트 함수에서 매 프레임마다 이 값이 감소한다.
+        }
+        if (jumpBufferCounter > 0 && hangCounter > 0) //time.deltaTime 이 지나기 전에 점프 키가 또 눌린것? 
+        {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, jumpForce);
+            jumpBufferCounter = 0;
+            hangCounter = 0;
+        }
+    }
+
 
 
     private void Update()
     {
         UpdateCollision();
         JumpHeight();
+        JumpAdditive();
+
     }
 
 }
