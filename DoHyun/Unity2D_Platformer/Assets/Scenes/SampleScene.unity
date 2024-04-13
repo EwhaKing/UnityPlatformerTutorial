@@ -810,6 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footStepEffect: {fileID: 1916788455}
+  landingEffect: {fileID: 1263628899}
 --- !u!1 &1263628896
 GameObject:
   m_ObjectHideFlags: 0
