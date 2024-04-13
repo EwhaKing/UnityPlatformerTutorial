@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //스테이지 정보를 바탕으로 플레이어의 x축 이동 범위를 제한하기 위한 변수
+    [SerializeField]
+    StageData stageData;
     //입력 키에 따라 오브젝트를 이동하는 컴포넌트의 메소드를 호출하여 플레이어의 이동을 제어하도록 구현한다.
-
     [SerializeField]
     KeyCode jumpKeyCode = KeyCode.C;
     MovementRigidbody2D movement;
@@ -35,7 +37,7 @@ public class PlayerController : MonoBehaviour
         x *= offset; //걷기는 -0.5~0.5 , 뛰기는 -1~1이 되도록한다.
 
         //플레이어 이동 제어
-        movement.MoveTo(x); //함수 만들지 않고 그냥 바로 코드 사용하도록 함
+        UpdateMove(x);
 
 
         //플레이어 점프 제어
@@ -44,6 +46,14 @@ public class PlayerController : MonoBehaviour
         //플레이어 애니메이션 제어
         playerAnimator.UpdateAnimation(x);
 
+    }
+
+    void UpdateMove(float x)
+    {
+        movement.MoveTo(x);
+        //플레이어 x축 이동 한계치 설정(PlayerLimitMixX ~ PlayerLimitMaxX)
+        float xPosition = Mathf.Clamp(transform.position.x, stageData.PlayerLimitMixX, stageData.PlayerLimitMaxX);
+        transform.position = new Vector2(xPosition, transform.position.y);
     }
 
 
