@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,7 +34,10 @@ public class PlayerController : MonoBehaviour
 		UpdateJump();
 		// 플레이어 애니메이션 재생
 		playerAnimator.UpdateAnimation(x);
-	}
+        // 머리/발에 충돌한 오브젝트 처리
+        UpdateAboveCollision();
+        UpdateBelowCollision();
+    }
 
 	private void UpdateMove(float x)
 	{
@@ -59,6 +63,39 @@ public class PlayerController : MonoBehaviour
 		else if ( Input.GetKeyUp(jumpKeyCode) ) // 점프 키 뗌
 		{
 			movement.IsLongJump = false;
+		}
+	}
+    private void UpdateAboveCollision()
+    {
+        if (movement.Velocity.y >= 0 && movement.HitAboveObject != null)
+        {
+            // 플레이어의 머리와 오브젝트가 충돌했기 때문에 y축 속력을 0으로 설정
+            movement.ResetVelocityY();
+
+			// 플레이어의 머리와 충돌한 오브젝트가 Tile일 때 Tile의 속성에 따라 충돌 처리
+			if (movement.HitAboveObject.TryGetComponent<TileBase>(out var tile) && !tile.IsHit)
+				// TryGetComponent<>()로 movement.HitAboveObject에 TileBase 컴포넌트가 있는지 검사하고,
+				// 컴포넌트가 있으면 out var tile 변수에 컴포넌트 정보 저장 후 true 반환 -> 조건문 내부 코드 실행
+			{
+				tile.UpdateCollision();
+			}
+		}
+    }
+
+	private void UpdateBelowCollision()
+	{
+		if (movement.HitBelowObject != null)
+		{
+			// Platform_03_OneWay
+			if (Input.GetKeyDown(KeyCode.DownArrow) && movement.HitBelowObject.TryGetComponent<PlatformEffectorExtension>(out var p))
+			{
+				p.OnDownWay();
+			}
+
+			if (movement.HitBelowObject.TryGetComponent<PlatformBase>(out var platform ))
+			{
+				platform.UpdateCollision(gameObject);
+			}
 		}
 	}
 }
