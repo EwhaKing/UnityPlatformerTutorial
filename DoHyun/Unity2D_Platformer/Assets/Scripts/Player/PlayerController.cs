@@ -112,6 +112,11 @@ public class PlayerController : MonoBehaviour
     {
         if (movement.HitBelowObject != null)
         {
+            //Platform_03_Oneway
+            if (Input.GetKeyDown(KeyCode.DownArrow) && movement.HitBelowObject.TryGetComponent<PlatformEffectorExtension>(out var p))
+            {
+                p.OnDownWay();
+            }
             if (movement.HitBelowObject.TryGetComponent<PlatformBase>(out var platform))
             {
                 platform.UpdateCollision(gameObject);
