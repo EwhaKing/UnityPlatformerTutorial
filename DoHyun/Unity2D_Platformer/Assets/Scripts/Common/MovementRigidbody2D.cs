@@ -11,6 +11,8 @@ public class MovementRigidbody2D : MonoBehaviour
     private LayerMask groundCheckLayer; //바닥 체크를 위한 충돌 레이어
     [SerializeField]
     private LayerMask aboveCollisionLayer; //머리 충돌 체크를 위한 레이어
+    [SerializeField]
+    private LayerMask belowCollisionLayer; //발 충돌 체크를 위한 레이어
 
     [Header("Move")]
     [SerializeField]
@@ -44,10 +46,13 @@ public class MovementRigidbody2D : MonoBehaviour
     private Collider2D col2D;
 
     public bool IsLongJump { set; get; } = false; //낮은 점프, 높은 점프 체크
-    public bool IsGrounded { set; get; } = false; //바닥 체크
+    public bool IsGrounded { private set; get; } = false; //바닥 체크
 
     //머리에 충돌한 오브젝트를 저장하는 Collider2D 프로퍼티
-    public Collider2D HitAboveObject { get; set; }
+    public Collider2D HitAboveObject { get; private set; }
+
+    //발에 충돌한 오브젝트를 저장하는 Collider2D 프로퍼티. 충돌 여부를 MovementRigidbody2D에서 검사하기 때문에 set은 현재 클리스에서만 할 수 있도록 private으로 설정한다.
+    public Collider2D HitBelowObject { get; private set; }
 
     //애니메이션을 위한 플레이어 속도를 반환하는 프로퍼티 Velocity를 정의한다.
     //이 프로퍼티를 사용하여 플레이어 캐릭터의 애니메이션을 제어한다.
@@ -101,6 +106,7 @@ public class MovementRigidbody2D : MonoBehaviour
         //3. 바닥인지 체크 -> 물리 충돌박스의 overlap?
         IsGrounded = Physics2D.OverlapBox(footPosition, collisionSize, 0, groundCheckLayer); //groundCheckLayer : 바닥 충돌 체크 레이어
         HitAboveObject = Physics2D.OverlapBox(headPosition, collisionSize, 0, aboveCollisionLayer);
+        HitBelowObject = Physics2D.OverlapBox(footPosition, collisionSize, 0, belowCollisionLayer);
 
         //Physics2D.OverlapBox(Vector2 point, Vector2 size, float angle, int layerMask)
         //point 위치에 size 만큼의 충돌 박스(BoxCollider2D)를 angle 각도 만큼 회전해서 생성한다.
@@ -120,6 +126,12 @@ public class MovementRigidbody2D : MonoBehaviour
         //     rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, jumpForce);
         // }
         jumpBufferCounter = jumpBufferTime;
+    }
+
+    //외부에서 점프힘(force)을 설정해서 호출하는 JumpTo() 메소드
+    public void JumpTo(float force)
+    {
+        rigid2D.velocity = new Vector2(rigid2D.velocity.x, force);
     }
 
     //낮은 점프, 높은 점프 구현을 위해 중력 계수를 조절

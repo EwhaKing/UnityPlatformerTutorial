@@ -47,8 +47,9 @@ public class PlayerController : MonoBehaviour
         playerAnimator.UpdateAnimation(x);
 
 
-        //머리에 충돌한 오브젝트 처리
+        //머리/발에 충돌한 오브젝트 처리
         UpdateAboveCollision();
+        UpdateBelowCollision();
 
     }
 
@@ -103,6 +104,18 @@ public class PlayerController : MonoBehaviour
 
             //Tip : GetComponent<>()로 컴포넌트를 얻어오고, 컴포넌트를 정상적으로 얻어왔는지 null 체크를 해서 null이 아닐 때 어떤 처리를 하는 코드의 경우
             //TryGetComponent<>()를 활용하면 된다.
+        }
+    }
+
+
+    void UpdateBelowCollision()
+    {
+        if (movement.HitBelowObject != null)
+        {
+            if (movement.HitBelowObject.TryGetComponent<PlatformBase>(out var platform))
+            {
+                platform.UpdateCollision(gameObject);
+            }
         }
     }
 }
