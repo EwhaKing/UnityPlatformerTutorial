@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6721688300042466915}
   - component: {fileID: 8584159413912938737}
   - component: {fileID: 2401551100627252715}
+  - component: {fileID: 8078679986101442791}
   m_Layer: 7
   m_Name: Tile_00_NonBroke
   m_TagString: Untagged
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8078679986101442791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794125996322680177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62ea8cdb4d834c198049973f80367e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

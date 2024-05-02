@@ -88,6 +88,21 @@ public class PlayerController : MonoBehaviour
         if (movement.Velocity.y >= 0 && movement.HitAboveObject != null)
         {
             movement.ResetVelocityY();
+
+            //플레이어의 머리와 충돌한 오브젝트가 Tile일 때 Tile의 속성에 따라 충돌 처리
+            //movement.HitAboveObject에 TileBase 컴포넌트가 있는지 검사하고,
+            //있다면 'out var tile 변수에 컴포넌트 정보를 저장'하고 true를 반환해 조건문 내부 코드를 실행하도록 한다.
+            if (movement.HitAboveObject.TryGetComponent<TileBase>(out var tile) && !tile.IsHit)
+            {
+                //tile의 IsHit이 false 일 때만 호출되도록 조건 추가
+
+                //반환된 tile 변수의 UpdateCollision() 메소드를 호출한다.
+                tile.UpdateCollision();
+
+            }
+
+            //Tip : GetComponent<>()로 컴포넌트를 얻어오고, 컴포넌트를 정상적으로 얻어왔는지 null 체크를 해서 null이 아닐 때 어떤 처리를 하는 코드의 경우
+            //TryGetComponent<>()를 활용하면 된다.
         }
     }
 }
