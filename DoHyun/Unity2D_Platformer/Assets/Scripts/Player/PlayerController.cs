@@ -46,6 +46,10 @@ public class PlayerController : MonoBehaviour
         //플레이어 애니메이션 제어
         playerAnimator.UpdateAnimation(x);
 
+
+        //머리에 충돌한 오브젝트 처리
+        UpdateAboveCollision();
+
     }
 
     void UpdateMove(float x)
@@ -74,5 +78,16 @@ public class PlayerController : MonoBehaviour
         }
 
         //누르고 있으면~ 높은 점프, 그게 아니고 키가 떼졌으면 일반 점프
+    }
+
+    void UpdateAboveCollision()
+    {
+        //플레이어의 y 속력이 0 이상으로 위로 점프하고 있을 때 머리에 충돌하는 오브젝트가 있으면
+        //movement.ResetVelocityY() 메소드를 호출해 플레이어의 y 속력을 0으로 설정해 아래로 떨어지도록 한다.
+
+        if (movement.Velocity.y >= 0 && movement.HitAboveObject != null)
+        {
+            movement.ResetVelocityY();
+        }
     }
 }
