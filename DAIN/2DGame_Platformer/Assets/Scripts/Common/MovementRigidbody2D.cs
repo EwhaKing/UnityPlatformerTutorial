@@ -5,6 +5,10 @@ public class MovementRigidbody2D : MonoBehaviour
     [Header("LayerMask")]
     [SerializeField]
     private LayerMask groundCheckLayer; // 바닥 체크를 위한 충돌 레이어
+    [SerializeField]
+    private LayerMask aboveColiisionLayer; // 머리 충돌 체크를 위한 레이어
+    [SerializeField]
+    private LayerMask belowColiisionLayer; // 발 충돌 체크를 위한 레이어
 
     [Header("Move")]
     [SerializeField]
@@ -32,12 +36,16 @@ public class MovementRigidbody2D : MonoBehaviour
 
     private Vector2 collisionSize; // 머리, 발 위치에 생성하는 충돌 박스 크기
     private Vector2 footPosition; // 발 위치
+    private Vector2 headPosition; // 머리 위치
 
     private Rigidbody2D rigid2D; // 물리를 제어하는 컴포넌트
     private Collider2D collider2D; // 현재 오브젝트의 충돌 범위
 
     public bool IsLongJump { set; get; } = false; // 낮은 점프, 높은 점프 체크
     public bool IsGrounded { private set; get; } = false; // 바닥 체크 (바닥에 닿아있을 때 true)
+   public Collider2D HitAboveObject { private set; get; } // 머리에 충돌한 오브젝트 정보
+   // 머리의 오브젝트 충돌 여부를 MovementRigidbody2D에서 검사하기 때문에 set은 현재 클래스에서만 할 수 있도록 private으로 설정
+   public Collider2D HitBelowObject { private set; get; }  // 발에 충돌한 오브젝트 정보
 
     public Vector2 Velocity => rigid2D.velocity; // rigid2D.velocity를 반환하는 GET만 가능한 프로퍼티 Velocity 정의
 
@@ -77,14 +85,19 @@ public class MovementRigidbody2D : MonoBehaviour
         // 플레이어 발에 생성하는 충돌 범위
         collisionSize = new Vector2((bounds.max.x - bounds.min.x) * 0.5f, 0.1f);
 
-        // 플레이어의 발 위치
+        // 플레이어의 머리/발 위치
+        headPosition = new Vector2(bounds.center.x, bounds.max.y);
         footPosition = new Vector2(bounds.center.x, bounds.min.y);
 
         // 플레이어가 바닥을 밟고 있는지 체크하는 충돌 박스
         IsGrounded = Physics2D.OverlapBox(footPosition, collisionSize, 0, groundCheckLayer);
-            // Physics2D.OverlapBox(Vector2 point, Vector2 size, float angle, int layerMask);
-            // point 위치에 size 크기의 충돌 박스(BoxCollider2D)를 angle 각도만큼 회전해서 생성
-            // 이 충돌 박스는 layerMask에 설정된 레이어만 충돌이 가능      
+        // Physics2D.OverlapBox(Vector2 point, Vector2 size, float angle, int layerMask);
+        // point 위치에 size 크기의 충돌 박스(BoxCollider2D)를 angle 각도만큼 회전해서 생성
+        // 이 충돌 박스는 layerMask에 설정된 레이어만 충돌이 가능      
+
+        // 플레이어의 머리/발에 충돌한 오브젝트 정보를 저장하는 충돌 박스
+        HitAboveObject = Physics2D.OverlapBox(headPosition, collisionSize, 0, aboveColiisionLayer);
+        HitBelowObject = Physics2D.OverlapBox(footPosition, collisionSize, 0, belowColiisionLayer);
     }
 
     // 다른 클래스에서 호출하는 점프 메소드
@@ -97,6 +110,11 @@ public class MovementRigidbody2D : MonoBehaviour
                 }*/
 
         jumpBufferCounter = jumpBufferTime;
+    }
+
+    public void JumpTo(float force)
+    {
+        rigid2D.velocity = new Vector2(rigid2D.velocity.x, force);
     }
 
     private void JumpHeight()
@@ -129,6 +147,11 @@ public class MovementRigidbody2D : MonoBehaviour
             jumpBufferCounter = 0;
             hangCounter = 0;
         }
+    }
+
+    public void ResetVelocityY()
+    {
+        rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
     }
 }
    
