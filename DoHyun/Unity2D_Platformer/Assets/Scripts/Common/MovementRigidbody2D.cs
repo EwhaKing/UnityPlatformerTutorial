@@ -9,6 +9,10 @@ public class MovementRigidbody2D : MonoBehaviour
     [Header("LayerMask")]
     [SerializeField]
     private LayerMask groundCheckLayer; //바닥 체크를 위한 충돌 레이어
+    [SerializeField]
+    private LayerMask aboveCollisionLayer; //머리 충돌 체크를 위한 레이어
+    [SerializeField]
+    private LayerMask belowCollisionLayer; //발 충돌 체크를 위한 레이어
 
     [Header("Move")]
     [SerializeField]
@@ -36,16 +40,23 @@ public class MovementRigidbody2D : MonoBehaviour
     float hangCounter;
     private Vector2 collisionSize; //머리, 발 위치에 생성하는 충돌 박스 크기
     private Vector2 footPosition; //발 위치
+    private Vector2 headPosition; //머리 위치
 
-    private Rigidbody2D rigidbody2D;
-    private Collider2D collider2D;
+    private Rigidbody2D rigid2D;
+    private Collider2D col2D;
 
     public bool IsLongJump { set; get; } = false; //낮은 점프, 높은 점프 체크
-    public bool IsGrounded { set; get; } = false; //바닥 체크
+    public bool IsGrounded { private set; get; } = false; //바닥 체크
+
+    //머리에 충돌한 오브젝트를 저장하는 Collider2D 프로퍼티
+    public Collider2D HitAboveObject { get; private set; }
+
+    //발에 충돌한 오브젝트를 저장하는 Collider2D 프로퍼티. 충돌 여부를 MovementRigidbody2D에서 검사하기 때문에 set은 현재 클리스에서만 할 수 있도록 private으로 설정한다.
+    public Collider2D HitBelowObject { get; private set; }
 
     //애니메이션을 위한 플레이어 속도를 반환하는 프로퍼티 Velocity를 정의한다.
     //이 프로퍼티를 사용하여 플레이어 캐릭터의 애니메이션을 제어한다.
-    public Vector2 Velocity => rigidbody2D.velocity;
+    public Vector2 Velocity => rigid2D.velocity;
 
     private void Awake()
     {
@@ -53,8 +64,8 @@ public class MovementRigidbody2D : MonoBehaviour
         moveSpeed = walkSpeed;
         //오브젝트의 컴포넌트를 사용하기 위해서는
         //프로그램이 실행되면 가장 먼저 호출되는 awake 함수에서 GetComponent 메소드를 사용해서 컴포넌트를 가져와야 한다.
-        rigidbody2D = GetComponent<Rigidbody2D>();
-        collider2D = GetComponent<Collider2D>();
+        rigid2D = GetComponent<Rigidbody2D>();
+        col2D = GetComponent<Collider2D>();
     }
 
     /// <summary>
@@ -77,21 +88,25 @@ public class MovementRigidbody2D : MonoBehaviour
 
         //마지막에 리지드바디의 속도를 바꿀 때 이동 방향을 결정하는 부호를 이동 속도에 곱해준다!
         //velocity 2차원 벡터로 전달해야한다.
-        rigidbody2D.velocity = new Vector2(x * moveSpeed, rigidbody2D.velocity.y);
+        rigid2D.velocity = new Vector2(x * moveSpeed, rigid2D.velocity.y);
     }
 
     //플레이어 이동에 따라 coliison 위치가 변경되므로 매번 충돌박스를 생성하고 바닥인지 체크하도록 해야한다.
     private void UpdateCollision()
     {
-        Bounds bounds = collider2D.bounds; //플레이어 오브젝트의 Collider2D의 min, max, center의 위치 정보를 가져온다.
+        Bounds bounds = col2D.bounds; //플레이어 오브젝트의 Collider2D의 min, max, center의 위치 정보를 가져온다.
         //이를 통해 머리, 발에 충돌 범위를 설정, 발 위치 설정 -> 바닥 충돌 감지한다.
 
         //1.충돌 박스 크기 구하기
         collisionSize = new Vector2((bounds.max.x - bounds.min.x) * 0.5f, 0.1f);
         //2. 발 위치 설정하기
         footPosition = new Vector2(bounds.center.x, bounds.min.y);
+        headPosition = new Vector2(bounds.center.x, bounds.max.y);
+
         //3. 바닥인지 체크 -> 물리 충돌박스의 overlap?
         IsGrounded = Physics2D.OverlapBox(footPosition, collisionSize, 0, groundCheckLayer); //groundCheckLayer : 바닥 충돌 체크 레이어
+        HitAboveObject = Physics2D.OverlapBox(headPosition, collisionSize, 0, aboveCollisionLayer);
+        HitBelowObject = Physics2D.OverlapBox(footPosition, collisionSize, 0, belowCollisionLayer);
 
         //Physics2D.OverlapBox(Vector2 point, Vector2 size, float angle, int layerMask)
         //point 위치에 size 만큼의 충돌 박스(BoxCollider2D)를 angle 각도 만큼 회전해서 생성한다.
@@ -113,17 +128,23 @@ public class MovementRigidbody2D : MonoBehaviour
         jumpBufferCounter = jumpBufferTime;
     }
 
+    //외부에서 점프힘(force)을 설정해서 호출하는 JumpTo() 메소드
+    public void JumpTo(float force)
+    {
+        rigid2D.velocity = new Vector2(rigid2D.velocity.x, force);
+    }
+
     //낮은 점프, 높은 점프 구현을 위해 중력 계수를 조절
     private void JumpHeight()
     {
         //longJump이고, 점프 하는 중(올라가는 중)
-        if (IsLongJump && rigidbody2D.velocity.y > 0)
+        if (IsLongJump && rigid2D.velocity.y > 0)
         {
-            rigidbody2D.gravityScale = lowGravityScale;
+            rigid2D.gravityScale = lowGravityScale;
         }
         else
         {
-            rigidbody2D.gravityScale = highGravityScale;
+            rigid2D.gravityScale = highGravityScale;
         }
     }
 
@@ -141,10 +162,16 @@ public class MovementRigidbody2D : MonoBehaviour
         }
         if (jumpBufferCounter > 0 && hangCounter > 0) //time.deltaTime 이 지나기 전에 점프 키가 또 눌린것? 
         {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, jumpForce);
+            rigid2D.velocity = new Vector2(rigid2D.velocity.x, jumpForce);
             jumpBufferCounter = 0;
             hangCounter = 0;
         }
+    }
+
+    public void ResetVelocityY()
+    {
+        //플레이어의 y 속력을 0으로 설정한다.
+        rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
     }
 
 

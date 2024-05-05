@@ -46,6 +46,11 @@ public class PlayerController : MonoBehaviour
         //플레이어 애니메이션 제어
         playerAnimator.UpdateAnimation(x);
 
+
+        //머리/발에 충돌한 오브젝트 처리
+        UpdateAboveCollision();
+        UpdateBelowCollision();
+
     }
 
     void UpdateMove(float x)
@@ -74,5 +79,48 @@ public class PlayerController : MonoBehaviour
         }
 
         //누르고 있으면~ 높은 점프, 그게 아니고 키가 떼졌으면 일반 점프
+    }
+
+    void UpdateAboveCollision()
+    {
+        //플레이어의 y 속력이 0 이상으로 위로 점프하고 있을 때 머리에 충돌하는 오브젝트가 있으면
+        //movement.ResetVelocityY() 메소드를 호출해 플레이어의 y 속력을 0으로 설정해 아래로 떨어지도록 한다.
+
+        if (movement.Velocity.y >= 0 && movement.HitAboveObject != null)
+        {
+            movement.ResetVelocityY();
+
+            //플레이어의 머리와 충돌한 오브젝트가 Tile일 때 Tile의 속성에 따라 충돌 처리
+            //movement.HitAboveObject에 TileBase 컴포넌트가 있는지 검사하고,
+            //있다면 'out var tile 변수에 컴포넌트 정보를 저장'하고 true를 반환해 조건문 내부 코드를 실행하도록 한다.
+            if (movement.HitAboveObject.TryGetComponent<TileBase>(out var tile) && !tile.IsHit)
+            {
+                //tile의 IsHit이 false 일 때만 호출되도록 조건 추가
+
+                //반환된 tile 변수의 UpdateCollision() 메소드를 호출한다.
+                tile.UpdateCollision();
+
+            }
+
+            //Tip : GetComponent<>()로 컴포넌트를 얻어오고, 컴포넌트를 정상적으로 얻어왔는지 null 체크를 해서 null이 아닐 때 어떤 처리를 하는 코드의 경우
+            //TryGetComponent<>()를 활용하면 된다.
+        }
+    }
+
+
+    void UpdateBelowCollision()
+    {
+        if (movement.HitBelowObject != null)
+        {
+            //Platform_03_Oneway
+            if (Input.GetKeyDown(KeyCode.DownArrow) && movement.HitBelowObject.TryGetComponent<PlatformEffectorExtension>(out var p))
+            {
+                p.OnDownWay();
+            }
+            if (movement.HitBelowObject.TryGetComponent<PlatformBase>(out var platform))
+            {
+                platform.UpdateCollision(gameObject);
+            }
+        }
     }
 }
