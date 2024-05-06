@@ -5,6 +5,10 @@ public class MovementRigidbody2D : MonoBehaviour
     [Header("LayerMask")]
     [SerializeField]
     private LayerMask groundCheckLayer; //바닥 체크를 위한 충돌 레이어
+    [SerializeField]
+    private LayerMask aboveCollisionLayer; // 머리 충돌 체크를 위한 레이어
+    [SerializeField]
+    private LayerMask belowCollisionLayer; //발 충돌 체크를 위한 레이어
 
     [Header("Move")]
     [SerializeField]
@@ -32,12 +36,15 @@ public class MovementRigidbody2D : MonoBehaviour
 
     private Vector2 collisionSize;  //머리, 발 위치에 생성하는 충돌 박스 크기
     private Vector2 footPosition; // 발 위치
+    private Vector2 headPosition; //머리 위치
 
     private Rigidbody2D rigid2D; //물리를 제어하는 컴포넌트
     private Collider2D collider2D; //현재 오브젝트의 충돌 범위
 
     public bool IsLongJump { set; get; } = false;  //낮은 점프, 높은 점프 체크
     public bool IsGrounded { private set; get; } = false; //바닥 체크 (바닥에 닿아있을 때 true)
+    public Collider2D HitAboveObject { private set; get; } // 머리에 충돌한 오브젝트 정보
+    public Collider2D HitBelowObject { private set; get; } // 발에 충돌한 오브젝트 정보
 
     public Vector2 Velocity => rigid2D.velocity;
 
@@ -80,12 +87,16 @@ public class MovementRigidbody2D : MonoBehaviour
         //플레이어의 발에 생성하는 충돌 범위
         collisionSize = new Vector2((bounds.max.x - bounds.min.x) * 0.5f, 0.1f);
 
-        //플레이어의 발 위치
+        //플레이어의 머리, 발 위치
+        headPosition = new Vector2(bounds.center.x, bounds.max.y);
         footPosition = new Vector2(bounds.center.x, bounds.min.y);
         
         //플레이어가 바닥을 밟고 있는지 체크하는 충돌 박스
         IsGrounded = Physics2D.OverlapBox(footPosition, collisionSize,0,groundCheckLayer);
 
+        //플레어이의 머리/발에 충돌한 오브젝트 정보를 저장하는 충돌 박스
+        HitAboveObject = Physics2D.OverlapBox(headPosition, collisionSize, 0, aboveCollisionLayer);
+        HitBelowObject = Physics2D.OverlapBox(footPosition, collisionSize, 0, belowCollisionLayer);
 
     }
 
@@ -96,6 +107,11 @@ public class MovementRigidbody2D : MonoBehaviour
     public void Jump()
     {
         jumpBufferCounter = jumpBufferTime;
+    }
+
+    public void JumpTo(float force)
+    {
+        rigid2D.velocity = new Vector2(rigid2D.velocity.x, force);
     }
 
    private void JumpHeight()
@@ -130,6 +146,9 @@ public class MovementRigidbody2D : MonoBehaviour
         }
     }
 
-
+    public void ResetVelocityY()
+    {
+        rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
+    }
 
 }
