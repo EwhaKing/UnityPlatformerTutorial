@@ -9,58 +9,62 @@ public class PlatformMoving : MonoBehaviour
 
     [SerializeField]
     private Transform target; //실제 이동하는 발판의 Transform
-    [SerializeField]
-    private Transform[] wayPoints; //이동 가능한 지점들의 배열
-    [SerializeField]
-    private float waitTime; //wayPoint에 도착해 잠시 대기하는 시간. 각 구감나다 대기 시간이 다르면 waitTime도 배열로 선언해야 한다.
-    [SerializeField]
-    private float timeOffset; //이동시간 설정을 위한 timeOffset. 이동 시간 = 거리 * timeOffset
-
-    private int wayPointCount; //이동 가능한 wayPoint 개수
-
-    private int currentIndex = 0; //현재 wayPoint 순번(인덱스)
 
 
-    private void Awake()
-    {
-        target.position = wayPoints[0].position;
-        wayPointCount = wayPoints.Length;
-        currentIndex++;
+    //=======FollowPath 스크립트와 중복된 내용. 삭제하고 오브젝트에 FollowPath 컴포넌트를 추가하는 걸로 수정함====//
+    //[SerializeField]
+    // private Transform[] wayPoints; //이동 가능한 지점들의 배열
+    // [SerializeField]
+    // private float waitTime; //wayPoint에 도착해 잠시 대기하는 시간. 각 구간마다 대기 시간이 다르면 waitTime도 배열로 선언해야 한다.
+    // [SerializeField]
+    // private float timeOffset; //이동시간 설정을 위한 timeOffset. 이동 시간 = 거리 * timeOffset
 
-        StartCoroutine(nameof(Process));
-    }
+    // private int wayPointCount; //이동 가능한 wayPoint 개수
 
-    //무한루프를 돌며 MoveAtoB() 메소드를 호출해 현재 발판 위치를 다음 이동지점까지 이동시키는 메소드
-    IEnumerator Process()
-    {
+    // private int currentIndex = 0; //현재 wayPoint 순번(인덱스)
 
-        while (true)
-        {
-            //target.position(현재 발판 위치)에서 wayPoints[currentIndex].position(다음 이동지점) 위치까지 이동시킨다.
-            yield return StartCoroutine(MoveAToB(target.position, wayPoints[currentIndex].position));
 
-            //waitTime 시간 동안 대기
-            yield return new WaitForSeconds(waitTime);
+    // private void Awake()
+    // {
+    //     target.position = wayPoints[0].position;
+    //     wayPointCount = wayPoints.Length;
+    //     currentIndex++;
 
-            //다음 이동 지점(wayPoint) 설정
-            currentIndex = (currentIndex + 1) % wayPointCount;
-        }
-    }
+    //     StartCoroutine(nameof(Process));
+    // }
 
-    //start에서 end위치까지 이동하는 MoveAToB() 코루틴 메소드
-    IEnumerator MoveAToB(Vector3 start, Vector3 end)
-    {
-        float percent = 0;
-        //Vector3.Distance(Vector3 a, Vector3 b) : 두 점 a와 b 사이의 거리 값을 구해 distance에 저장
-        float moveTime = Vector3.Distance(start, end) * timeOffset; //이동 시간 = 거리 * timeOffset;
+    // //무한루프를 돌며 MoveAtoB() 메소드를 호출해 현재 발판 위치를 다음 이동지점까지 이동시키는 메소드
+    // IEnumerator Process()
+    // {
 
-        while (percent < 1)
-        {
-            percent += Time.deltaTime / moveTime;
-            target.position = Vector3.Lerp(start, end, percent);
-            yield return null;
-        }
-    }
+    //     while (true)
+    //     {
+    //         //target.position(현재 발판 위치)에서 wayPoints[currentIndex].position(다음 이동지점) 위치까지 이동시킨다.
+    //         yield return StartCoroutine(MoveAToB(target.position, wayPoints[currentIndex].position));
+
+    //         //waitTime 시간 동안 대기
+    //         yield return new WaitForSeconds(waitTime);
+
+    //         //다음 이동 지점(wayPoint) 설정
+    //         currentIndex = (currentIndex + 1) % wayPointCount;
+    //     }
+    // }
+
+    // //start에서 end위치까지 이동하는 MoveAToB() 코루틴 메소드
+    // IEnumerator MoveAToB(Vector3 start, Vector3 end)
+    // {
+    //     float percent = 0;
+    //     //Vector3.Distance(Vector3 a, Vector3 b) : 두 점 a와 b 사이의 거리 값을 구해 distance에 저장
+    //     float moveTime = Vector3.Distance(start, end) * timeOffset; //이동 시간 = 거리 * timeOffset;
+
+    //     while (percent < 1)
+    //     {
+    //         percent += Time.deltaTime / moveTime;
+    //         target.position = Vector3.Lerp(start, end, percent);
+    //         yield return null;
+    //     }
+    // }
+    //=======FollowPath 스크립트와 중복된 내용. 삭제하고 오브젝트에 FollowPath 컴포넌트를 추가하는 걸로 수정함====//
 
     private void OnCollisionEnter2D(Collision2D other)
     {
