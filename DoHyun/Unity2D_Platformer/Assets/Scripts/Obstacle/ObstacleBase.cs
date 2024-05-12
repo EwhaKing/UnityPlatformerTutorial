@@ -20,7 +20,8 @@ public class ObstacleBase : MonoBehaviour
         }
         else
         {
-            Debug.Log("플레이어 체력 감소");//체력 시스템 만들고 수정
+            //Debug.Log("플레이어 체력 감소");//체력 시스템 만들고 수정
+            other.GetComponent<PlayerHP>().DecreseHP();
         }
     }
 }
