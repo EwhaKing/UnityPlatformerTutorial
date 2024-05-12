@@ -8,6 +8,8 @@ public class PlayerData : MonoBehaviour
     private int coin = 0;
     [SerializeField]
     private int projectile = 0;
+    [SerializeField]
+    private bool[] starts = new bool[3] { false, false, false };
     public int Coin
     {
         set => coin = Mathf.Clamp(value, 0, 9999); //0~9999개 사이로 제한
@@ -20,5 +22,10 @@ public class PlayerData : MonoBehaviour
     {
         set => projectile = Mathf.Clamp(value, 0, MaxProjectile);
         get => projectile;
+    }
+
+    public void GetStar(int index)
+    {
+        starts[index] = true;
     }
 }
