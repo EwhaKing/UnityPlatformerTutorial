@@ -1,27 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatformEffectorExtension : MonoBehaviour
 {
-   private PlatformEffector2D effector;
+	private	PlatformEffector2D	effector;
 
-   private void Awake()
-   {
-    effector = GetComponent<PlatformEffector2D>();
-   }
+	private void Awake()
+	{
+		effector = GetComponent<PlatformEffector2D>();
+	}
 
-   public void OnDownWay()
-   {
-    StartCoroutine(nameof(ReverseRotationalOffset));
-   }
+	public void OnDownWay()
+	{
+		StartCoroutine(nameof(ReverserotationalOffset));
+	}
 
-   private IEnumerator ReverseRotationalOffset()
-   {
-    effector.rotationalOffset = 180;
+	private IEnumerator ReverserotationalOffset()
+	{
+		effector.rotationalOffset = 180;
 
-    yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.5f);
 
-    effector.rotationalOffset = 0;
-   }
+		effector.rotationalOffset = 0;
+	}
 }
+
