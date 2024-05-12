@@ -39,8 +39,9 @@ public class TileItem : TileBase
             itemType = (ItemType)Random.Range(0, itemPrefabs.Length);
         }
         //Instantiate() 메소드를 호출해 아이템 오브젝트를 아이템 타일의 위치(transform.position)에 생성한다.
-        Instantiate(itemPrefabs[(int)itemType], transform.position, Quaternion.identity);
-
+        GameObject item = Instantiate(itemPrefabs[(int)itemType], transform.position, Quaternion.identity);
+        //item의 ItemBase 컴포넌트의 Setup() 메소드를 호출
+        item.GetComponent<ItemBase>().Setup();
         //아이템이 Coin이면 아이템 타일이 소지하고 있는 코인 개수를 1 감소시킨다.
         if (itemType == ItemType.Coin)
         {
