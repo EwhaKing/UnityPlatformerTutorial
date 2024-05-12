@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerHP : MonoBehaviour
 {
     [SerializeField]
+    private UIPlayerData uIPlayerData;
+    [SerializeField]
     private int max = 3;//최대 체력
     [SerializeField]
     private int current; //현재 체력
@@ -33,6 +35,7 @@ public class PlayerHP : MonoBehaviour
         if (current > 1)
         {
             current--;
+            uIPlayerData.SetHP(current, false);
         }
         else
         {
@@ -44,7 +47,9 @@ public class PlayerHP : MonoBehaviour
     {
         if (current < max)
         {
+            uIPlayerData.SetHP(current, true);
             current++;
+
         }
 
     }
