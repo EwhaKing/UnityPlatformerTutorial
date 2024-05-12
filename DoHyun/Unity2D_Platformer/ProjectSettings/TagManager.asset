@@ -15,8 +15,8 @@ TagManager:
   - Tile
   - Platform
   - Item
-  - 
-  - 
+  - Player
+  - PlayerProjectile
   - 
   - 
   - 

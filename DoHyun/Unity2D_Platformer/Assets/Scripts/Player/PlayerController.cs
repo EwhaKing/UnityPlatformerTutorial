@@ -6,17 +6,24 @@ public class PlayerController : MonoBehaviour
 {
     //스테이지 정보를 바탕으로 플레이어의 x축 이동 범위를 제한하기 위한 변수
     [SerializeField]
-    StageData stageData;
+    private StageData stageData;
     //입력 키에 따라 오브젝트를 이동하는 컴포넌트의 메소드를 호출하여 플레이어의 이동을 제어하도록 구현한다.
     [SerializeField]
-    KeyCode jumpKeyCode = KeyCode.C;
-    MovementRigidbody2D movement;
-    PlayerAnimator playerAnimator;
+    private KeyCode jumpKeyCode = KeyCode.C;
+    [SerializeField]
+    private KeyCode fireKeyCode = KeyCode.Z;
+    private MovementRigidbody2D movement;
+    private PlayerAnimator playerAnimator;
+    private PlayerWeapon weapon;
+    private PlayerData playerData;
+    private int lastDirectionX = 1;
 
     private void Awake()
     {
         movement = GetComponent<MovementRigidbody2D>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
+        weapon = GetComponent<PlayerWeapon>();
+        playerData = GetComponent<PlayerData>();
     }
 
     // Update is called once per frame
@@ -34,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
         float offset = 0.5f + Input.GetAxis("Sprint") * 0.5f; //누르지 않으면 0.5, 누르면 1이 되도록 한다.
 
+        if (x != 0) lastDirectionX = (int)x;
         x *= offset; //걷기는 -0.5~0.5 , 뛰기는 -1~1이 되도록한다.
 
         //플레이어 이동 제어
@@ -50,6 +58,9 @@ public class PlayerController : MonoBehaviour
         //머리/발에 충돌한 오브젝트 처리
         UpdateAboveCollision();
         UpdateBelowCollision();
+
+        //원거리 공격 제어
+        UpdateRangeAttack();
 
     }
 
@@ -121,6 +132,16 @@ public class PlayerController : MonoBehaviour
             {
                 platform.UpdateCollision(gameObject);
             }
+        }
+    }
+
+
+    void UpdateRangeAttack()
+    {
+        if (Input.GetKeyDown(fireKeyCode) && playerData.CurrentProjectile > 0)
+        {
+            playerData.CurrentProjectile--;
+            weapon.StartFire(lastDirectionX);
         }
     }
 }

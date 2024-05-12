@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 180687964}
   - component: {fileID: 180687965}
   - component: {fileID: 180687966}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,6 +517,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 983026525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &614556479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 614556480}
+  m_Layer: 10
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &614556480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614556479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1534630598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &793350019 stripped
 GameObject:
@@ -1365,7 +1396,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1187285041}
   - component: {fileID: 1187285042}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MovementEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1414,7 +1445,7 @@ GameObject:
   - component: {fileID: 1263628897}
   - component: {fileID: 1263628899}
   - component: {fileID: 1263628898}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LandingEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6386,7 +6417,8 @@ GameObject:
   - component: {fileID: 1534630601}
   - component: {fileID: 1534630603}
   - component: {fileID: 1534630604}
-  m_Layer: 0
+  - component: {fileID: 1534630605}
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6408,6 +6440,7 @@ Transform:
   m_Children:
   - {fileID: 180687963}
   - {fileID: 1187285041}
+  - {fileID: 614556480}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1534630599
@@ -6486,6 +6519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageData: {fileID: 11400000, guid: e8f607a3a32af4fb6accd15c1dd06ee5, type: 2}
   jumpKeyCode: 99
+  fireKeyCode: 122
 --- !u!114 &1534630602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6537,6 +6571,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max: 3
+  current: 0
+--- !u!114 &1534630605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534630597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac554ed462934015b3b01e821812262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 1455629385718010594, guid: 51219dd1f2c9e479d84df7d2c70435a9, type: 3}
+  spawnPoint: {fileID: 614556480}
 --- !u!1 &1623767636
 GameObject:
   m_ObjectHideFlags: 0
@@ -6631,7 +6680,7 @@ GameObject:
   - component: {fileID: 1916788456}
   - component: {fileID: 1916788455}
   - component: {fileID: 1916788454}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FootStepEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
