@@ -8,7 +8,7 @@ public class ParticleAutoDestroyer : MonoBehaviour
 	{
 		particle = GetComponent<ParticleSystem>();
 	}
-
+	
 	private void Update()
 	{
 		if ( !particle.isPlaying )

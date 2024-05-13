@@ -33,7 +33,8 @@ public class TileItem : TileBase
 			// Coin, Invincibility, HPPorion, Projectile 중 선택
 		}
 
-		Instantiate(itemPrefabs[(int)itemType], transform.position, Quaternion.identity);
+		GameObject item = Instantiate(itemPrefabs[(int)itemType], transform.position, Quaternion.identity);
+		item.GetComponent<ItemBase>().Setup();
 
 		if ( itemType == ItemType.Coin )
 		{
