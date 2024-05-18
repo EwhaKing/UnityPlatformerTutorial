@@ -101,8 +101,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sample text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a5d5669868367ee4ab9d8a2eeb19345b, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 666d6eca8d9eb9f4d8cd9ab3e1e9d37c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 62417aa2057287e498c08c14b39ecb40, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 3b5d5a221b1ceaa459e407aee21afce4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -266,6 +266,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1008791709990663304}
   - component: {fileID: 2227446177451134070}
+  - component: {fileID: 4039778580426809769}
+  - component: {fileID: 4575075062206705210}
   m_Layer: 0
   m_Name: Prop_00_Sign_Question
   m_TagString: Untagged
@@ -341,3 +343,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4039778580426809769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4413713990853148531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29284557d6f0a4344a4a0287062e0fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guideObject: {fileID: 2085918699394051520}
+--- !u!58 &4575075062206705210
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4413713990853148531}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

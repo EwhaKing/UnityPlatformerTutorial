@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class UIPlayerData : MonoBehaviour
- {
+{
 	[Header("HP")]
 	[SerializeField]
 	private	Image[]			hpImages;
