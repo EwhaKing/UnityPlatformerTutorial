@@ -186,8 +186,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sample text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a5d5669868367ee4ab9d8a2eeb19345b, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 666d6eca8d9eb9f4d8cd9ab3e1e9d37c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 27f8c8edbee3948eea8b4651fb8d5927, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b12bbbfac7cf44c69a2b6c7389cd7b8c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -266,6 +266,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5775695809454317636}
   - component: {fileID: 8651957213368189473}
+  - component: {fileID: 2381364389735683396}
+  - component: {fileID: 2826833211553615228}
   m_Layer: 0
   m_Name: Prop_01_Sign_Arrow
   m_TagString: Untagged
@@ -341,3 +343,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &2381364389735683396
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7185710923378103166}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &2826833211553615228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7185710923378103166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8aa0cf7302804904a8b2bf63055b5a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guideObject: {fileID: 4920026349472703083}
