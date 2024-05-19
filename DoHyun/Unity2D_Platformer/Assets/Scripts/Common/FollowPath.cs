@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//현재 경로 따라가기의 상태를 나타내는 열거형
+public enum FollowPath_State { Idle = 0, Move } //대기상태 = 0, 이동 상태 = 1
 public class FollowPath : MonoBehaviour
 {
 
@@ -16,6 +18,14 @@ public class FollowPath : MonoBehaviour
 
     private int wayPointsCount; //이동 가능한 wayPoints 개수
     private int currentIndex = 0; //현재 wayPoints index
+
+
+
+    //=====Follow Path State 삳태에 따라 follow 컨트롤을 위한 변수 추가=====//
+    private int direction;
+    public int Direction => direction; //외부에서 Get만 가능한 프로퍼티 정의
+
+    public FollowPath_State State { private set; get; } = FollowPath_State.Idle; //현재 경로 따라가기의 상태를 설정하거나 확인하는 set, get이 가능한 프로퍼티 정의. 이때 상태 설정은 현재 클래스에서만 가능하도록 private로 정의한다.
 
     private void Awake()
     {
@@ -49,11 +59,40 @@ public class FollowPath : MonoBehaviour
         float percent = 0;
         float moveTime = Vector3.Distance(start, end) * timeOffset;
 
+        //이동하는 while() 반복문 호출 전에 이동방향 direction 값을 설정하는 메소드 호출
+        SetDirection(start.x, end.x);
+        //현재 경로 따라가기 상태를 이동으로 설정
+        State = FollowPath_State.Move;
+
         while (percent < 1)
         {
             percent += Time.deltaTime / moveTime;
             target.position = Vector3.Lerp(start, end, percent);
             yield return null;
         }
+
+        //while() 반복문 호출이 끝나면 이동이 완료되었다는 뜻으로 현재 경로 따라가기 상태를 대기로 설정
+        State = FollowPath_State.Idle;
+    }
+
+    /// <summary>
+    /// 매개변수로 받아온 시작 x위치, 목표 x위치를 기준으로 현재 이동 방향을 판단하는 메소드
+    /// </summary>
+    /// <param name="start">시작 위치 </param>
+    /// <param name="end">목표 위치</param>
+    private void SetDirection(float start, float end)
+    {
+        //end-start 값이 0이 아니면 좌/우 방향으로 이동 중이다.
+        if (end - start != 0) direction = (int)Mathf.Sign(end - start); //음수면 -1, 양수면 1을 변수에 저장한다.
+        else direction = 0;
+    }
+
+
+    /// <summary>
+    /// 외부에서 경로 따라가기를 중지할 때 호출하는 Stop() 메소드
+    /// </summary>
+    public void Stop()
+    {
+        StopAllCoroutines(); // 현재 클래스에서 재생중인 모든 코루틴 중지
     }
 }
