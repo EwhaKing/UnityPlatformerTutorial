@@ -2,14 +2,20 @@ using UnityEngine;
 
 public class CameraFollowTarget : MonoBehaviour
 {
-    [SerializeField]
-    private StageData stageData;
+
     [SerializeField]
     private Transform target;
     [SerializeField]
     private bool x, y, z;
 
+    private StageData stageData;
     private float offsetY;
+
+    public void Setup(StageData stageData)
+    {
+        this.stageData = stageData;
+        transform.position = new Vector3(stageData.CameraPosition.x, stageData.CameraPosition.y, -10);
+    }
 
     private void Awake()
     {
