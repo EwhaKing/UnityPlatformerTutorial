@@ -8,7 +8,8 @@ public class PropsGoal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Game Clear");
+            // Debug.Log("Game Clear");
+            other.GetComponent<PlayerController>().LevelComplete();
         }
     }
 }

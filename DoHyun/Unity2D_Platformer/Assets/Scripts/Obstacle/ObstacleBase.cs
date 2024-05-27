@@ -16,7 +16,8 @@ public class ObstacleBase : MonoBehaviour
 
         if (isInstantDeath)
         {
-            Debug.Log("플레이어 사망"); //체력 시스템 만들고 수정
+            // Debug.Log("플레이어 사망"); //체력 시스템 만들고 수정
+            other.GetComponent<PlayerController>().OnDie();
         }
         else
         {

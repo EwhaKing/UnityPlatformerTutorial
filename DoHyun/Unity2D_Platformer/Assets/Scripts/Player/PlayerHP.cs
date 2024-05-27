@@ -11,6 +11,8 @@ public class PlayerHP : MonoBehaviour
     [SerializeField]
     private int current; //현재 체력
 
+    private PlayerController playerController;
+
     //====무적 상태====//
     private SpriteRenderer spriteRenderer; //플레이어 피격 시 색상의 알파 값 변경을 위함
     private Color originColor; //플레이어 초기 색상 정보 저장
@@ -20,6 +22,7 @@ public class PlayerHP : MonoBehaviour
     private void Awake()
     {
         current = max;
+        playerController = GetComponent<PlayerController>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         originColor = spriteRenderer.color;
     }
@@ -39,7 +42,8 @@ public class PlayerHP : MonoBehaviour
         }
         else
         {
-            Debug.Log("플레이어 사망 처리");
+            // Debug.Log("플레이어 사망 처리");
+            playerController.OnDie();
         }
     }
 

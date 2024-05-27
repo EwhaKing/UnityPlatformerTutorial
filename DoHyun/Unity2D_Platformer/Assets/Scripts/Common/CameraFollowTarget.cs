@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFollowTarget : MonoBehaviour
 {
-    [SerializeField]
     StageData stageData; //카메라의 최소, 최대 범위가 저장되어 있는 StageData 타입 변수
     [SerializeField]
     Transform target; //카메라가 추적할 대상
@@ -17,7 +16,11 @@ public class CameraFollowTarget : MonoBehaviour
 
     float offsetY; //target과 카메라의 y 거리 값을 저장하는 변수
 
-
+    public void Setup(StageData stageData)
+    {
+        this.stageData = stageData;
+        transform.position = new Vector3(stageData.CameraPosition.x, stageData.CameraPosition.y, -10);
+    }
     private void Awake()
     {
         //offsetY 값 설정
