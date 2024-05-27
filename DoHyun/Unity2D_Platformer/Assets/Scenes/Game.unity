@@ -320,7 +320,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 116511228}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351801734}
+        m_TargetAssemblyTypeName: UIGamePopup, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &116511228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,7 +851,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 217244644}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351801734}
+        m_TargetAssemblyTypeName: UIGamePopup, Assembly-CSharp
+        m_MethodName: Resume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &217244644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,7 +984,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 253525376}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351801734}
+        m_TargetAssemblyTypeName: UIGamePopup, Assembly-CSharp
+        m_MethodName: SelectLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &253525376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8940,6 +8976,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5228260134863800692, guid: 879e733fb23385c4595a527116c7f349, type: 3}
   m_PrefabInstance: {fileID: 1332543861}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1351801733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1351801735}
+  - component: {fileID: 1351801734}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1351801734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351801733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a04b6158a2847e7adb7623934e3c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayBackground: {fileID: 1809449350}
+  popupPause: {fileID: 48115644}
+--- !u!4 &1351801735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351801733}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 108.689644, y: 11.569512, z: -0.022304483}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1364885260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9560,7 +9642,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1531410413}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351801734}
+        m_TargetAssemblyTypeName: UIGamePopup, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1531410413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15886,3 +15980,4 @@ SceneRoots:
   - {fileID: 2035772633}
   - {fileID: 989356393}
   - {fileID: 1895563098}
+  - {fileID: 1351801735}
