@@ -2,16 +2,20 @@
 
 public class CameraFollowTarget : MonoBehaviour
 {
-	[SerializeField]
-	private	StageData	stageData;
+	
 	[SerializeField]
 	private	Transform	target;
 	[SerializeField]
 	private bool x, y, z;
 
-	private float offsetY;
-
-	private void Awake()
+    private StageData stageData;
+    private float offsetY;
+    public void Setup(StageData stageData)
+    {
+        this.stageData = stageData;
+        transform.position = new Vector3(stageData.CameraPosition.x, stageData.CameraPosition.y, -10);
+    }
+    private void Awake()
 	{
 		// (카메라의 y 위치 - target의 y위치) 값을 절대값으로 변환하고, offsetY 변수에 저장
 		offsetY = Mathf.Abs(transform.position.y - target.position.y);
