@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameController gameController;
     //스테이지 정보를 바탕으로 플레이어의 x축 이동 범위를 제한하기 위한 변수
-    [SerializeField]
     private StageData stageData;
     //입력 키에 따라 오브젝트를 이동하는 컴포넌트의 메소드를 호출하여 플레이어의 이동을 제어하도록 구현한다.
     [SerializeField]
@@ -18,6 +17,12 @@ public class PlayerController : MonoBehaviour
     private PlayerWeapon weapon;
     private PlayerData playerData;
     private int lastDirectionX = 1;
+
+    public void Setup(StageData stageData)
+    {
+        this.stageData = stageData;
+        transform.position = this.stageData.PlayerPosition;
+    }
 
     private void Awake()
     {
