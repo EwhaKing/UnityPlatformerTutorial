@@ -10,6 +10,9 @@ public class UIGamePopup : MonoBehaviour
     [SerializeField] private GameObject popupPause;
     [Header("레벨 실패")]
     [SerializeField] private GameObject popupLevelFailed;
+    [Header("레벨 성공")]
+    [SerializeField] private GameObject popupLevelComplete;
+    [SerializeField] private GameObject[] starObjects;
 
     public void SetTimeScale(float scale)
     {
@@ -31,7 +34,16 @@ public class UIGamePopup : MonoBehaviour
         overlayBackground.SetActive(true);
         popupLevelFailed.SetActive(true);
     }
-
+    public void LevelComplete(bool[] stars)
+    {
+        SetTimeScale(0);
+        overlayBackground.SetActive(true);
+        popupLevelComplete.SetActive(true);
+        for (int i = 0; i < starObjects.Length; ++i)
+        {
+            starObjects[i].SetActive(stars[i]);
+        }
+    }
     public void Resume()
     {
         SetTimeScale(1);
@@ -44,6 +56,12 @@ public class UIGamePopup : MonoBehaviour
         Utils.LoadScene(SceneNames.SelectLevel);
     }
     public void Restart()
+    {
+        SetTimeScale(1);
+        Utils.LoadScene();
+    }
+
+    public void NextLevel()
     {
         SetTimeScale(1);
         Utils.LoadScene();

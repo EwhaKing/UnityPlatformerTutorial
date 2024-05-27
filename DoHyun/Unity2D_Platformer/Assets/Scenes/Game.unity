@@ -1250,7 +1250,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 328516840}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351801734}
+        m_TargetAssemblyTypeName: UIGamePopup, Assembly-CSharp
+        m_MethodName: SelectLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &328516840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3794,7 +3806,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1154180049}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351801734}
+        m_TargetAssemblyTypeName: UIGamePopup, Assembly-CSharp
+        m_MethodName: NextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1154180049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9021,6 +9045,11 @@ MonoBehaviour:
   overlayBackground: {fileID: 1809449350}
   popupPause: {fileID: 48115644}
   popupLevelFailed: {fileID: 887845172}
+  popupLevelComplete: {fileID: 905136000}
+  starObjects:
+  - {fileID: 811450116}
+  - {fileID: 1880755836}
+  - {fileID: 943952263}
 --- !u!4 &1351801735
 Transform:
   m_ObjectHideFlags: 0
@@ -9049,6 +9078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiGamePopup: {fileID: 1351801734}
+  playerData: {fileID: 1534630603}
 --- !u!1001 &1364885260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9272,7 +9302,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1367813688}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351801734}
+        m_TargetAssemblyTypeName: UIGamePopup, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1367813688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9892,7 +9934,7 @@ MonoBehaviour:
   uIPlayerData: {fileID: 210057861}
   coin: 0
   projectile: 0
-  starts: 000000
+  stars: 000000
 --- !u!114 &1534630604
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -161,4 +161,9 @@ public class PlayerController : MonoBehaviour
     {
         gameController.LevelFailed();
     }
+
+    public void LevelComplete()
+    {
+        gameController.LevelComplete();
+    }
 }

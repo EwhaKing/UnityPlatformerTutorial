@@ -11,7 +11,7 @@ public class PlayerData : MonoBehaviour
     [SerializeField]
     private int projectile = 0;
     [SerializeField]
-    private bool[] starts = new bool[3] { false, false, false };
+    private bool[] stars = new bool[3] { false, false, false };
     public int Coin
     {
         set
@@ -34,16 +34,16 @@ public class PlayerData : MonoBehaviour
         }
         get => projectile;
     }
+    public bool[] Stars => stars;
 
     public void GetStar(int index)
     {
-        starts[index] = true;
+        stars[index] = true;
         uIPlayerData.SetStar(index);
     }
 
     private void Awake()
     {
-        Coin = 0;
         CurrentProjectile = 0;
     }
 }

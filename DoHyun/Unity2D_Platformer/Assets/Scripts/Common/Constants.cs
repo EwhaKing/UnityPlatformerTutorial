@@ -23,6 +23,7 @@ public class Constants
     public static readonly string CurrentLevel = "CURRENT_LEVEL";
     public static readonly string LevelUnlock = "LEVEL_UNLOCK_";
     public static readonly string LevelStar = "LEVEL_START_";
+    public static readonly string Coin = "COINCOUNT";
 
     public static (bool, bool[]) LoadLevelData(int level)
     {
@@ -35,6 +36,20 @@ public class Constants
         }
 
         return (isUnlock, stars);
+    }
+
+    public static void LevelComplete(int level, bool[] stars, int coinCount)
+    {
+        PlayerPrefs.SetInt(Coin, coinCount);
+        if (level + 1 <= MaxLevel)
+        {
+            PlayerPrefs.SetInt($"{LevelUnlock}{level + 1}", 1);
+        }
+        for (int index = 0; index < StarCount; ++index)
+        {
+            PlayerPrefs.SetInt($"{LevelUnlock}{level}{index}", stars[index] == true ? 1 : 0);
+
+        }
     }
 
 }
