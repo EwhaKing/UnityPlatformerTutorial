@@ -8,6 +8,8 @@ public class UIGamePopup : MonoBehaviour
     [SerializeField] private GameObject overlayBackground;
     [Header("일시정지")]
     [SerializeField] private GameObject popupPause;
+    [Header("레벨 실패")]
+    [SerializeField] private GameObject popupLevelFailed;
 
     public void SetTimeScale(float scale)
     {
@@ -22,6 +24,12 @@ public class UIGamePopup : MonoBehaviour
         SetTimeScale(0);
         overlayBackground.SetActive(true);
         popupPause.SetActive(true);
+    }
+    public void LevelFailed()
+    {
+        SetTimeScale(0);
+        overlayBackground.SetActive(true);
+        popupLevelFailed.SetActive(true);
     }
 
     public void Resume()

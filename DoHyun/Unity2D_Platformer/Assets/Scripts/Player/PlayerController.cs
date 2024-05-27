@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameController gameController;
     //스테이지 정보를 바탕으로 플레이어의 x축 이동 범위를 제한하기 위한 변수
     [SerializeField]
     private StageData stageData;
@@ -61,6 +62,9 @@ public class PlayerController : MonoBehaviour
 
         //원거리 공격 제어
         UpdateRangeAttack();
+
+        //플레이어가 낭떠러지로 추락했는지 검사
+        IsUnderGround();
 
     }
 
@@ -143,5 +147,18 @@ public class PlayerController : MonoBehaviour
             playerData.CurrentProjectile--;
             weapon.StartFire(lastDirectionX);
         }
+    }
+
+    private void IsUnderGround()
+    {
+        if (transform.position.y < stageData.MapLimitMinY)
+        {
+            OnDie();
+        }
+    }
+
+    public void OnDie()
+    {
+        gameController.LevelFailed();
     }
 }
